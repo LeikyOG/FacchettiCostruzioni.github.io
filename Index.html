@@ -1,0 +1,179 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Bebas+Neue&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#C0181A;--red-dark:#8B1010;--red-mid:#A01416;
+  --red-glow:rgba(192,24,26,0.25);--red-light:rgba(192,24,26,0.08);
+  --glass:rgba(255,255,255,0.07);--glass-border:rgba(255,255,255,0.15);
+  --glass-strong:rgba(255,255,255,0.12);
+  --bg-deep:#0d0305;--bg-mid:#180608;--bg-card:#1a0608;
+  --text:#fff;--text-muted:rgba(255,255,255,0.55);--text-dim:rgba(255,255,255,0.35)
+}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg-deep);color:var(--text)}
+.wrap{min-height:100vh;background:var(--bg-deep);position:relative;overflow:hidden;padding:0 0 40px}
+.bg-glow{position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:700px;height:400px;background:radial-gradient(ellipse at center,rgba(192,24,26,0.35) 0%,transparent 70%);pointer-events:none;z-index:0}
+.bg-glow2{position:absolute;bottom:-80px;right:-100px;width:400px;height:400px;background:radial-gradient(ellipse at center,rgba(192,24,26,0.15) 0%,transparent 70%);pointer-events:none;z-index:0}
+
+.hero{position:relative;z-index:1;text-align:center;padding:36px 20px 28px}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:3px;color:var(--red);text-transform:uppercase;margin-bottom:10px}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,5vw,38px);font-weight:400;line-height:1.05;letter-spacing:1.5px;color:#fff;margin-bottom:6px}
+.hero-title span{color:var(--red)}
+.hero-sub{font-size:12px;color:var(--text-muted);letter-spacing:1px}
+
+.content{position:relative;z-index:1;padding:0 16px}
+
+.glass-card{background:var(--glass);border:0.5px solid var(--glass-border);border-radius:16px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+
+.config-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:14px 16px;margin-bottom:16px}
+.cfg-group{display:flex;align-items:center;gap:8px}
+.cfg-label{font-size:11px;font-weight:600;letter-spacing:1px;color:var(--text-muted);text-transform:uppercase}
+.cfg-input{width:58px;background:rgba(255,255,255,0.08);border:0.5px solid var(--glass-border);border-radius:8px;padding:6px 8px;font-size:14px;color:#fff;text-align:center;font-family:'Inter',sans-serif}
+.cfg-input:focus{outline:none;border-color:rgba(192,24,26,0.6)}
+.divider-v{width:0.5px;height:28px;background:var(--glass-border);margin:0 4px}
+.btn-reset{margin-left:auto;font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;padding:7px 16px;border-radius:8px;border:0.5px solid rgba(192,24,26,0.5);background:rgba(192,24,26,0.1);color:var(--red);cursor:pointer;font-family:'Inter',sans-serif}
+.btn-reset:hover{background:rgba(192,24,26,0.2)}
+
+.entry-zone{padding:28px 20px;text-align:center;margin-bottom:16px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.counter-pill{background:rgba(192,24,26,0.15);border:0.5px solid rgba(192,24,26,0.3);border-radius:20px;padding:4px 16px;font-size:12px;font-weight:600;letter-spacing:0.5px;color:var(--red);display:inline-block}
+.name-field{position:relative;width:100%;max-width:340px}
+.name-field input{width:100%;background:rgba(255,255,255,0.06);border:0.5px solid var(--glass-border);border-radius:12px;padding:13px 18px;font-size:15px;color:#fff;text-align:center;font-family:'Inter',sans-serif;transition:border-color 0.2s}
+.name-field input::placeholder{color:var(--text-dim)}
+.name-field input:focus{outline:none;border-color:rgba(192,24,26,0.7);background:rgba(255,255,255,0.09)}
+.main-btn{position:relative;padding:13px 44px;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border-radius:10px;border:none;background:var(--red);color:#fff;cursor:pointer;font-family:'Inter',sans-serif;overflow:hidden}
+.main-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.12) 0%,transparent 100%)}
+.main-btn:hover{background:var(--red-mid)}
+.main-btn:active{transform:scale(0.97)}
+.main-btn:disabled{opacity:0.3;cursor:not-allowed}
+.result-toast{font-size:14px;font-weight:600;min-height:22px;color:#fff;letter-spacing:0.3px}
+.result-toast .squad-name{color:var(--red)}
+
+.done-banner{background:rgba(192,24,26,0.12);border:0.5px solid rgba(192,24,26,0.3);border-radius:12px;color:var(--red);font-size:13px;font-weight:600;padding:12px 18px;text-align:center;margin-bottom:14px;display:none;letter-spacing:0.3px}
+
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.section-head-label{font-size:10px;font-weight:700;letter-spacing:2.5px;color:var(--text-muted);text-transform:uppercase}
+.section-head-line{flex:1;height:0.5px;background:var(--glass-border)}
+
+.teams-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:10px}
+.team-card{background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:14px;overflow:hidden;transition:border-color 0.2s}
+.team-card.has-members{border-color:rgba(192,24,26,0.3)}
+.team-stripe{height:3px;background:var(--red);opacity:0.7}
+.team-head{padding:10px 12px 8px;display:flex;align-items:center;gap:8px;border-bottom:0.5px solid rgba(255,255,255,0.07)}
+.team-badge{width:22px;height:22px;border-radius:6px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0}
+.team-name-input{font-size:13px;font-weight:600;border:none;background:transparent;color:#fff;width:100%;outline:none;font-family:'Inter',sans-serif}
+.team-name-input:focus{color:var(--red)}
+.team-cnt{font-size:10px;color:var(--text-dim);white-space:nowrap;margin-left:auto;font-weight:500}
+.team-members{padding:8px 12px 10px;display:flex;flex-direction:column;gap:3px;min-height:24px}
+.member-row{font-size:11px;padding:4px 8px;border-radius:6px;background:rgba(192,24,26,0.1);color:rgba(255,255,255,0.8);display:flex;align-items:center;gap:5px}
+.member-n{font-size:10px;color:var(--red);min-width:14px;font-weight:600}
+</style>
+
+<div class="wrap">
+  <div class="bg-glow"></div>
+  <div class="bg-glow2"></div>
+
+  <h2 class="sr-only">Facchetti Costruzioni — VI Torneo Memorial Sandro e Angelo Facchetti, estrattore squadre</h2>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Facchetti Costruzioni S.p.A.</div>
+    <div class="hero-title">VI Torneo Memorial<br><span>Sandro &amp; Angelo Facchetti</span></div>
+    <div class="hero-sub">Estrattore ufficiale squadre</div>
+  </div>
+
+  <div class="content">
+
+    <div class="glass-card config-row">
+      <div class="cfg-group">
+        <span class="cfg-label">Squadre</span>
+        <input class="cfg-input" type="number" id="cfg-teams" min="2" max="20" value="6">
+      </div>
+      <div class="divider-v"></div>
+      <div class="cfg-group">
+        <span class="cfg-label">Partecipanti</span>
+        <input class="cfg-input" type="number" id="cfg-players" min="2" max="200" value="80">
+      </div>
+      <button class="btn-reset" onclick="initApp()">Ricomincia</button>
+    </div>
+
+    <div class="glass-card entry-zone">
+      <div class="counter-pill" id="counter">Partecipante 1 di 80</div>
+      <div class="name-field">
+        <input id="name-input" type="text" placeholder="Inserisci il tuo nome..." maxlength="40" autocomplete="off">
+      </div>
+      <button class="main-btn" id="main-btn" onclick="assign()">Estrai Squadra</button>
+      <div class="result-toast" id="result-badge"></div>
+    </div>
+
+    <div class="done-banner" id="done-banner">Estrazione completata — tutte le squadre sono bilanciate.</div>
+
+    <div class="section-head">
+      <div class="section-head-label">Squadre</div>
+      <div class="section-head-line"></div>
+    </div>
+
+    <div class="teams-grid" id="teams-grid"></div>
+  </div>
+</div>
+
+<script>
+let numTeams,numPlayers,assigned,order,teamNames,teamMembers;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function buildOrder(nT,nP){const s=[];const b=Math.floor(nP/nT),e=nP%nT;for(let t=0;t<nT;t++){const c=b+(t<e?1:0);for(let x=0;x<c;x++)s.push(t)}return shuffle(s)}
+function initApp(){
+  numTeams=Math.max(2,Math.min(20,parseInt(document.getElementById('cfg-teams').value)||6));
+  numPlayers=Math.max(2,Math.min(200,parseInt(document.getElementById('cfg-players').value)||80));
+  assigned=0;order=buildOrder(numTeams,numPlayers);
+  teamNames=Array.from({length:numTeams},(_,i)=>`Squadra ${i+1}`);
+  teamMembers=Array.from({length:numTeams},()=>[]);
+  renderTeams();updateCounter();
+  document.getElementById('result-badge').innerHTML='';
+  document.getElementById('name-input').value='';
+  document.getElementById('name-input').disabled=false;
+  document.getElementById('main-btn').disabled=false;
+  document.getElementById('done-banner').style.display='none';
+}
+function renderTeams(){
+  const grid=document.getElementById('teams-grid');grid.innerHTML='';
+  for(let t=0;t<numTeams;t++){
+    const b=Math.floor(numPlayers/numTeams),e=numPlayers%numTeams;
+    const target=b+(t<e?1:0);
+    const card=document.createElement('div');
+    card.className='team-card';card.id=`team-${t}`;
+    card.innerHTML=`<div class="team-stripe"></div><div class="team-head"><div class="team-badge">${t+1}</div><input class="team-name-input" data-team="${t}" value="${teamNames[t]}" onchange="teamNames[this.dataset.team]=this.value;updateResultLabel()"><span class="team-cnt" id="cnt-${t}">0/${target}</span></div><div class="team-members" id="members-${t}"></div>`;
+    grid.appendChild(card);
+  }
+}
+function renderMembers(t){
+  const el=document.getElementById(`members-${t}`);if(!el)return;
+  el.innerHTML=teamMembers[t].map((m,i)=>`<div class="member-row"><span class="member-n">${i+1}</span><span>${m||'—'}</span></div>`).join('');
+  const card=document.getElementById(`team-${t}`);
+  if(card&&teamMembers[t].length>0)card.classList.add('has-members');
+}
+function updateCounter(){
+  const el=document.getElementById('counter');
+  if(assigned>=numPlayers){el.textContent='Tutti estratti!';return;}
+  el.textContent=`Partecipante ${assigned+1} di ${numPlayers}`;
+}
+function updateResultLabel(){}
+function assign(){
+  if(assigned>=numPlayers)return;
+  const nameEl=document.getElementById('name-input');
+  const name=nameEl.value.trim();
+  const t=order[assigned];
+  teamMembers[t].push(name||`#${assigned+1}`);assigned++;
+  document.getElementById('result-badge').innerHTML=`Assegnato a <span class="squad-name">${teamNames[t]}</span>`;
+  renderMembers(t);
+  const b=Math.floor(numPlayers/numTeams),e=numPlayers%numTeams;
+  const target=b+(t<e?1:0);
+  const cntEl=document.getElementById(`cnt-${t}`);
+  if(cntEl)cntEl.textContent=`${teamMembers[t].length}/${target}`;
+  nameEl.value='';nameEl.focus();updateCounter();
+  if(assigned>=numPlayers){
+    document.getElementById('main-btn').disabled=true;
+    document.getElementById('name-input').disabled=true;
+    document.getElementById('done-banner').style.display='block';
+  }
+}
+document.getElementById('name-input').addEventListener('keydown',e=>{if(e.key==='Enter')assign()});
+initApp();
+</script>
